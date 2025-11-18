@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=4 uid="uid://ccw70ciuoiqwh"]
 
-[ext_resource type="PackedScene" uid="uid://de40midmp3s" path="res://scenes/player.tscn" id="1_ig7tw"]
-[ext_resource type="Script" uid="uid://fep33cd0qdth" path="res://scripts/main.gd" id="2_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://c83vojn36mewq" path="res://scenes/mob.tscn" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://6y3ikl01ip7g" path="res://scenes/hud.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://de40midmp3s" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://fep33cd0qdth" path="res://main.gd" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://c83vojn36mewq" path="res://mob.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://6y3ikl01ip7g" path="res://hud.tscn" id="4_1bvp3"]
 [ext_resource type="AudioStream" uid="uid://blh66vnps5hka" path="res://art/gameover.wav" id="5_lquwl"]
 
 [sub_resource type="Curve2D" id="Curve2D_h2yge"]
@@ -43,14 +43,15 @@ grow_vertical = 2
 color = Color(0.5647406, 0.61198145, 0.41499737, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
+speed = 400
 
 [node name="MobTimer" type="Timer" parent="."]
 wait_time = 0.5
 
-[node name="StartTimer" type="Timer" parent="."]
-
 [node name="ScoreTimer" type="Timer" parent="."]
-wait_time = 2.0
+
+[node name="StartTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(240, 450)
@@ -70,6 +71,6 @@ stream = ExtResource("5_lquwl")
 
 [connection signal="hit" from="Player" to="." method="game_over"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
-[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
